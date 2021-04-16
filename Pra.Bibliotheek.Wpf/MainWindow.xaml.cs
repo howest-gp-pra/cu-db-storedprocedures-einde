@@ -17,7 +17,7 @@ namespace Pra.Bibliotheek.Wpf
             InitializeComponent();
         }
 
-        IBookService bibService = new ConnectedService();
+        IBookService bibService = new StoredProceduresService();
         bool isNew;
 
         private void rdbDisconnected_Checked(object sender, RoutedEventArgs e)
