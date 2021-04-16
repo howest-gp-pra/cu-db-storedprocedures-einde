@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using Pra.Bibliotheek.Core.Entities;
 using Pra.Bibliotheek.Core.Interfaces;
 
