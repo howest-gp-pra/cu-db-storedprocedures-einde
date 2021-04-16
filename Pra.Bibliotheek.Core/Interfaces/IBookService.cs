@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Pra.Bibliotheek.Core.Entities;
 
 namespace Pra.Bibliotheek.Core.Interfaces
