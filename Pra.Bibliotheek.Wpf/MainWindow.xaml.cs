@@ -399,7 +399,7 @@ namespace Pra.Bibliotheek.Wpf
             Publisher publisher = (Publisher)lstPublishers.SelectedItem;
             if (bibService.IsPublisherInUse(publisher))
             {
-                MessageBox.Show("Deze auteur is nog in gebruik en kan momenteel niet verwijderd worden !", "Fout", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Deze uitgever is nog in gebruik en kan momenteel niet verwijderd worden !", "Fout", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if (!bibService.DeletePublisher(publisher))
