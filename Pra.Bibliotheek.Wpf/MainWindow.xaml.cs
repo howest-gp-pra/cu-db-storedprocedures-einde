@@ -149,7 +149,7 @@ namespace Pra.Bibliotheek.Wpf
                 txtTitle.Focus();
             }
         }
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             ActivateLeft();
             LstBooks_SelectionChanged(null, null);

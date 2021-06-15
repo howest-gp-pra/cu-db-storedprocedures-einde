@@ -28,7 +28,7 @@
         <GroupBox x:Name="grpRight" Header="Details" HorizontalAlignment="Left" Height="214" Margin="352,10,0,0" VerticalAlignment="Top" Width="438">
             <Grid>
                 <Button x:Name="btnSave" Content="Bewaren" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="101" Click="BtnSave_Click"/>
-                <Button x:Name="btnCancel" Content="Annuleren" HorizontalAlignment="Left" Height="27" Margin="117,10,0,0" VerticalAlignment="Top" Width="101" Click="btnCancel_Click"/>
+                <Button x:Name="btnCancel" Content="Annuleren" HorizontalAlignment="Left" Height="27" Margin="117,10,0,0" VerticalAlignment="Top" Width="101" Click="BtnCancel_Click"/>
 
                 <Label Content="Titel : " HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top"/>
                 <Label Content="Auteur : " HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top"/>
