@@ -39,12 +39,8 @@ namespace Pra.Bibliotheek.Wpf
         {
             ClearControls();
             lstBooks.ItemsSource = null;
-            Author author = null;
-            Publisher publisher = null;
-            if (cmbFilterAuthor.SelectedItem != null)
-                author = (Author)cmbFilterAuthor.SelectedItem;
-            if (cmbFilterPublisher.SelectedItem != null)
-                publisher = (Publisher)cmbFilterPublisher.SelectedItem;
+            Author author = (Author)cmbFilterAuthor.SelectedItem;
+            Publisher publisher = (Publisher)cmbFilterPublisher.SelectedItem;
             lstBooks.ItemsSource = bibService.GetBooks(author, publisher);
         }
         private void PopulateAuthors()
