@@ -31,10 +31,7 @@ namespace Pra.Bibliotheek.Core.Services
 
         public bool SaveData()
         {
-            if (FileService.WriteFile(dsBib))
-                return true;
-            else
-                return false;
+            return FileService.WriteFile(dsBib);
         }
         private void ReadExistingData()
         {
