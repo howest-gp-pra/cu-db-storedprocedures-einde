@@ -308,8 +308,15 @@ namespace Pra.Bibliotheek.Core.Services
             DataRow[] dataRows = dtPublishers.Select(search);
             if (dataRows.Count() == 1)
             {
-                dataRows[0]["name"] = publisher.Name;
-                return true;
+                try
+                {
+                    dataRows[0]["name"] = publisher.Name;
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
             else
             {
@@ -416,11 +423,18 @@ namespace Pra.Bibliotheek.Core.Services
             DataRow[] dataRows = dtBooks.Select(search);
             if (dataRows.Count() == 1)
             {
-                dataRows[0]["title"] = book.Title;
-                dataRows[0]["authorID"] = book.AuthorID;
-                dataRows[0]["publisherID"] = book.PublisherID;
-                dataRows[0]["year"] = book.Year;
-                return true;
+                try
+                {
+                    dataRows[0]["title"] = book.Title;
+                    dataRows[0]["authorID"] = book.AuthorID;
+                    dataRows[0]["publisherID"] = book.PublisherID;
+                    dataRows[0]["year"] = book.Year;
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
             else
             {
