@@ -10,13 +10,14 @@ namespace Pra.Bibliotheek.Wpf
 
     public partial class MainWindow : Window
     {
+        IBookService bibService;
+        bool isNew;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        IBookService bibService;
-        bool isNew;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             bibService = new DisconnectedService();
