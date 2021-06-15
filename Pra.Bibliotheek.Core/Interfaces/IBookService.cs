@@ -21,7 +21,7 @@ namespace Pra.Bibliotheek.Core.Interfaces
         bool UpdatePublisher(Publisher publisher);
         bool DeletePublisher(Publisher publisher);
         bool IsPublisherInUse(Publisher publisher);
-        bool DoesPulblisherIDExist(string publisherID);
+        bool DoesPublisherIDExist(string publisherID);
         Publisher FindPublisherByName(string name);
         Publisher FindPublisherByID(string publisherID);
 
