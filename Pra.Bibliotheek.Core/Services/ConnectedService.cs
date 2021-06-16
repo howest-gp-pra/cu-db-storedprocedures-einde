@@ -42,23 +42,13 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string sql = $"select count(*) from book where authorID = '{author.ID}'";
             string count = DBService.ExecuteScalar(sql);
-            if (count == null)
-                return false;
-            if (int.Parse(count) == 0)
-                return false;
-            else
-                return true;
+            return count != null && int.Parse(count) > 0;
         }
-        public bool DoesAuthorIDExists(string authorID)
+        public bool DoesAuthorIDExist(string authorID)
         {
             string sql = $"select count(*) from author where id = '{authorID}'";
             string count = DBService.ExecuteScalar(sql);
-            if (count == null)
-                return false;
-            if (int.Parse(count) == 0)
-                return false;
-            else
-                return true;
+            return count != null && int.Parse(count) > 0;
         }
         public Author FindAuthorByName(string name)
         {
@@ -114,23 +104,13 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string sql = $"select count(*) from book where publisherID = '{publisher.ID}'";
             string count = DBService.ExecuteScalar(sql);
-            if (count == null)
-                return false;
-            if (int.Parse(count) == 0)
-                return false;
-            else
-                return true;
+            return count != null && int.Parse(count) > 0;
         }
-        public bool DoesPulblisherIDExists(string publisherID)
+        public bool DoesPulblisherIDExist(string publisherID)
         {
             string sql = $"select count(*) from publisher where id = '{publisherID}'";
             string count = DBService.ExecuteScalar(sql);
-            if (count == null)
-                return false;
-            if (int.Parse(count) == 0)
-                return false;
-            else
-                return true;
+            return count != null && int.Parse(count) > 0;
         }
         public Publisher FindPublisherByName(string name)
         {
@@ -179,9 +159,9 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool AddBook(Book book)
         {
-            if (!DoesAuthorIDExists(book.AuthorID))
+            if (!DoesAuthorIDExist(book.AuthorID))
                 return false;
-            if (!DoesPulblisherIDExists(book.PublisherID))
+            if (!DoesPulblisherIDExist(book.PublisherID))
                 return false;
 
             string sql = $"insert into book (id, title, authorID, publisherID, year) values ('{book.ID}', '{Helper.HandleQuotes(book.Title)}' ,'{book.AuthorID}','{book.PublisherID}', {book.Year})";

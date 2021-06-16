@@ -14,7 +14,7 @@ namespace Pra.Bibliotheek.Core.Interfaces
         public bool UpdateAuthor(Author author);
         public bool DeleteAuthor(Author author);
         public bool IsAuthorInUse(Author author);
-        public bool DoesAuthorIDExists(string authorID);
+        public bool DoesAuthorIDExist(string authorID);
         public Author FindAuthorByName(string name);
         public Author FindAuthorByID(string authorID);
 
@@ -23,7 +23,7 @@ namespace Pra.Bibliotheek.Core.Interfaces
         public bool UpdatePublisher(Publisher publisher);
         public bool DeletePublisher(Publisher publisher);
         public bool IsPublisherInUse(Publisher publisher);
-        public bool DoesPulblisherIDExists(string publisherID);
+        public bool DoesPulblisherIDExist(string publisherID);
         public Publisher FindPublisherByName(string name);
         public Publisher FindPublisherByID(string publisherID);
 
