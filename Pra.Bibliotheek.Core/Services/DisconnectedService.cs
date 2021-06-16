@@ -359,7 +359,7 @@ namespace Pra.Bibliotheek.Core.Services
                 return false;
             }
         }
-        public bool DoesPulblisherIDExist(string publisherID)
+        public bool DoesPublisherIDExist(string publisherID)
         {
             string search = $"ID = '{publisherID}' ";
             DataRow[] dataRows = dtPublishers.Select(search);
@@ -419,7 +419,7 @@ namespace Pra.Bibliotheek.Core.Services
         {
             if (!DoesAuthorIDExist(book.AuthorID))
                 return false;
-            if (!DoesPulblisherIDExist(book.PublisherID))
+            if (!DoesPublisherIDExist(book.PublisherID))
                 return false;
 
             DataRow dr = dtBooks.NewRow();
