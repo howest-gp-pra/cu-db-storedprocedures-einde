@@ -7,29 +7,29 @@ namespace Pra.Bibliotheek.Core.Interfaces
 {
     public interface IBookService
     {
-        public bool SaveData();
+        bool SaveData();
 
-        public List<Author> GetAuthors();
-        public bool AddAuthor(Author author);
-        public bool UpdateAuthor(Author author);
-        public bool DeleteAuthor(Author author);
-        public bool IsAuthorInUse(Author author);
-        public bool DoesAuthorIDExist(string authorID);
-        public Author FindAuthorByName(string name);
-        public Author FindAuthorByID(string authorID);
+        List<Author> GetAuthors();
+        bool AddAuthor(Author author);
+        bool UpdateAuthor(Author author);
+        bool DeleteAuthor(Author author);
+        bool IsAuthorInUse(Author author);
+        bool DoesAuthorIDExist(string authorID);
+        Author FindAuthorByName(string name);
+        Author FindAuthorByID(string authorID);
 
-        public List<Publisher> GetPublishers();
-        public bool AddPublisher(Publisher publisher);
-        public bool UpdatePublisher(Publisher publisher);
-        public bool DeletePublisher(Publisher publisher);
-        public bool IsPublisherInUse(Publisher publisher);
-        public bool DoesPublisherIDExist(string publisherID);
-        public Publisher FindPublisherByName(string name);
-        public Publisher FindPublisherByID(string publisherID);
+        List<Publisher> GetPublishers();
+        bool AddPublisher(Publisher publisher);
+        bool UpdatePublisher(Publisher publisher);
+        bool DeletePublisher(Publisher publisher);
+        bool IsPublisherInUse(Publisher publisher);
+        bool DoesPublisherIDExist(string publisherID);
+        Publisher FindPublisherByName(string name);
+        Publisher FindPublisherByID(string publisherID);
 
-        public List<Book> GetBooks(Author author = null, Publisher publisher = null);
-        public bool AddBook(Book book);
-        public bool UpdateBook(Book book);
-        public bool DeleteBook(Book book);
+        List<Book> GetBooks(Author author, Publisher publisher);
+        bool AddBook(Book book);
+        bool UpdateBook(Book book);
+        bool DeleteBook(Book book);
     }
 }
