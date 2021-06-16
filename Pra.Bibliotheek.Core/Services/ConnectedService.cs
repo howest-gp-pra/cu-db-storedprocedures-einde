@@ -138,17 +138,14 @@ namespace Pra.Bibliotheek.Core.Services
         {
             List<Book> books = new List<Book>();
 
-            string filter = "";
+            List<string> filters = new List<string>();
             if (author != null)
-                filter = "where authorID = '" + author.ID + "'";
+                filters.Add($"authorID = '{author.ID}'");
             if (publisher != null)
-            {
-                if (filter != "")
-                    filter += " and ";
-                else
-                    filter += " where ";
-                filter = " publisherID = '" + publisher.ID + "'";
-            }
+                filters.Add($"publisherID = '{publisher.ID}'");
+
+            string filter = string.Join(" and ", filters);
+
             string sql = "select * from book " + filter + " order by title";
             DataTable dataTable = DBService.ExecuteSelect(sql);
             foreach (DataRow dr in dataTable.Rows)
