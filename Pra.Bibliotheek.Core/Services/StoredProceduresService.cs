@@ -39,9 +39,9 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool AddBook(Book book)
         {
-            if (!DoesAuthorIDExists(book.AuthorID))
+            if (!DoesAuthorIDExist(book.AuthorID))
                 return false;
-            if (!DoesPulblisherIDExists(book.PublisherID))
+            if (!DoesPublisherIDExist(book.PublisherID))
                 return false;
 
             string spName = "AddBook";
@@ -160,7 +160,7 @@ namespace Pra.Bibliotheek.Core.Services
             else
                 return true;
         }
-        public bool DoesAuthorIDExists(string authorID)
+        public bool DoesAuthorIDExist(string authorID)
         {
             string spName = "DoesAuthorIDExists";
             SqlParameter[] sqlParameters = new SqlParameter[1];
@@ -266,7 +266,7 @@ namespace Pra.Bibliotheek.Core.Services
             else
                 return true;
         }
-        public bool DoesPulblisherIDExists(string publisherID)
+        public bool DoesPublisherIDExist(string publisherID)
         {
             string spName = "DoesPulblisherIDExists";
             SqlParameter[] sqlParameters = new SqlParameter[1];

@@ -27,7 +27,7 @@ namespace Pra.Bibliotheek.Core.Services
             SqlCommand sqlCommand = new SqlCommand(sqlInstruction, sqlConnection);
             try
             {
-                sqlCommand.Connection.Open();
+                sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 return true;
             }
@@ -38,17 +38,18 @@ namespace Pra.Bibliotheek.Core.Services
             }
             finally
             {
-                if(sqlConnection != null)
-                    sqlConnection.Close();
+                sqlConnection.Close();
             }
         }
+
+
         public static string ExecuteScalar(string sqlScalarInstruction)
         {
             SqlConnection sqlConnection = new SqlConnection(Helper.GetConnectionString());
             SqlCommand sqlCommand = new SqlCommand(sqlScalarInstruction, sqlConnection);
-            sqlConnection.Open();
             try
             {
+                sqlConnection.Open();
                 return sqlCommand.ExecuteScalar().ToString();
             }
             catch (Exception error)
@@ -58,8 +59,7 @@ namespace Pra.Bibliotheek.Core.Services
             }
             finally
             {
-                if(sqlConnection != null)
-                    sqlConnection.Close();
+                sqlConnection.Close();
             }
         }
 
@@ -132,6 +132,5 @@ namespace Pra.Bibliotheek.Core.Services
             }
 
         }
-
     }
 }
