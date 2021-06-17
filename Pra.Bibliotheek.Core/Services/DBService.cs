@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -63,23 +64,19 @@ namespace Pra.Bibliotheek.Core.Services
             }
         }
 
-        public static bool ExecuteSP(string spName, SqlParameter[] arguments)
+        public static bool ExecuteSP(string spName, List<SqlParameter> arguments)
         {
             SqlConnection sqlConnection = new SqlConnection(Helper.GetConnectionString());
             SqlCommand sqlCommand = new SqlCommand(spName, sqlConnection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
-            if (arguments != null)
+            foreach (SqlParameter sqlParameter in arguments)
             {
-                foreach (SqlParameter sqlParameter in arguments)
-                {
-                    if (sqlParameter != null)
-                        sqlCommand.Parameters.Add(sqlParameter);
-                }
-
+                sqlCommand.Parameters.Add(sqlParameter);
             }
+
             try
             {
-                sqlCommand.Connection.Open();
+                sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 return true;
 
@@ -91,29 +88,25 @@ namespace Pra.Bibliotheek.Core.Services
             }
             finally
             {
-                if (sqlConnection != null)
-                    sqlConnection.Close();
+                sqlConnection.Close();
             }
 
 
         }
-        public static DataTable ExecuteSPWithDataTable(string spName, SqlParameter[] arguments)
+        public static DataTable ExecuteSPWithDataTable(string spName, List<SqlParameter> arguments)
         {
             SqlConnection sqlConnection = new SqlConnection(Helper.GetConnectionString());
             SqlCommand sqlCommand = new SqlCommand(spName, sqlConnection);
             SqlDataReader sqlDataReader;
             sqlCommand.CommandType = CommandType.StoredProcedure;
-            if (arguments != null)
+            foreach (SqlParameter sqlParameter in arguments)
             {
-                foreach (SqlParameter sqlParameter in arguments)
-                {
-                    if(sqlParameter != null)
-                        sqlCommand.Parameters.Add(sqlParameter);
-                }
+                sqlCommand.Parameters.Add(sqlParameter);
             }
+
             try
             {
-                sqlCommand.Connection.Open();
+                sqlConnection.Open();
                 sqlDataReader = sqlCommand.ExecuteReader();
                 DataTable dataTable = new DataTable();
                 dataTable.Load(sqlDataReader);
@@ -127,8 +120,7 @@ namespace Pra.Bibliotheek.Core.Services
             }
             finally
             {
-                if (sqlConnection != null)
-                    sqlConnection.Close();
+                sqlConnection.Close();
             }
 
         }

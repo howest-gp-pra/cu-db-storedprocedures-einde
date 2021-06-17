@@ -15,20 +15,14 @@ namespace Pra.Bibliotheek.Core.Services
             List<Book> books = new List<Book>();
 
             string spName = "GetBooks";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = null;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
             if (author != null)
             {
-                sqlParameters[0] = new SqlParameter();
-                sqlParameters[0].ParameterName = "authorID";
-                sqlParameters[0].Value = author.ID;
+                sqlParameters.Add(new SqlParameter("authorID", author.ID));
             }
-            sqlParameters[1] = null;
             if (publisher != null)
             {
-                sqlParameters[1] = new SqlParameter();
-                sqlParameters[1].ParameterName = "publisherID";
-                sqlParameters[1].Value = author.ID;
+                sqlParameters.Add(new SqlParameter("publisherID", publisher.ID));
             }
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             foreach (DataRow dr in dataTable.Rows)
@@ -46,22 +40,14 @@ namespace Pra.Bibliotheek.Core.Services
 
             string spName = "AddBook";
 
-            SqlParameter[] sqlParameters = new SqlParameter[5];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = book.ID;
-            sqlParameters[1] = new SqlParameter();
-            sqlParameters[1].ParameterName = "title";
-            sqlParameters[1].Value = book.Title;
-            sqlParameters[2] = new SqlParameter();
-            sqlParameters[2].ParameterName = "authorID";
-            sqlParameters[2].Value = book.AuthorID;
-            sqlParameters[3] = new SqlParameter();
-            sqlParameters[3].ParameterName = "publisherID";
-            sqlParameters[3].Value = book.PublisherID;
-            sqlParameters[4] = new SqlParameter();
-            sqlParameters[4].ParameterName = "year";
-            sqlParameters[4].Value = book.Year;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", book.ID),
+                new SqlParameter("title", book.Title),
+                new SqlParameter("authorID", book.AuthorID),
+                new SqlParameter("publisherID", book.PublisherID),
+                new SqlParameter("year", book.Year)
+            };
 
             return DBService.ExecuteSP(spName, sqlParameters);
         }
@@ -69,22 +55,14 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string spName = "UpdateBook";
 
-            SqlParameter[] sqlParameters = new SqlParameter[5];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = book.ID;
-            sqlParameters[1] = new SqlParameter();
-            sqlParameters[1].ParameterName = "title";
-            sqlParameters[1].Value = book.Title;
-            sqlParameters[2] = new SqlParameter();
-            sqlParameters[2].ParameterName = "authorID";
-            sqlParameters[2].Value = book.AuthorID;
-            sqlParameters[3] = new SqlParameter();
-            sqlParameters[3].ParameterName = "publisherID";
-            sqlParameters[3].Value = book.PublisherID;
-            sqlParameters[4] = new SqlParameter();
-            sqlParameters[4].ParameterName = "year";
-            sqlParameters[4].Value = book.Year;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", book.ID),
+                new SqlParameter("title", book.Title),
+                new SqlParameter("authorID", book.AuthorID),
+                new SqlParameter("publisherID", book.PublisherID),
+                new SqlParameter("year", book.Year)
+            };
 
             return DBService.ExecuteSP(spName, sqlParameters);
         }
@@ -92,10 +70,10 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string spName = "DeleteBook";
 
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = book.ID;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", book.ID)
+            };
 
             return DBService.ExecuteSP(spName, sqlParameters);
         }
@@ -115,43 +93,39 @@ namespace Pra.Bibliotheek.Core.Services
         public bool AddAuthor(Author author)
         {
             string spName = "AddAuthor";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = author.ID;
-            sqlParameters[1] = new SqlParameter();
-            sqlParameters[1].ParameterName = "name";
-            sqlParameters[1].Value = author.Name;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", author.ID),
+                new SqlParameter("name", author.Name)
+            };
             return DBService.ExecuteSP(spName, sqlParameters);
         }
         public bool UpdateAuthor(Author author)
         {
             string spName = "UpdateAuthor";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = author.ID;
-            sqlParameters[1] = new SqlParameter();
-            sqlParameters[1].ParameterName = "name";
-            sqlParameters[1].Value = author.Name;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", author.ID),
+                new SqlParameter("name", author.Name)
+            };
             return DBService.ExecuteSP(spName, sqlParameters);
         }
         public bool DeleteAuthor(Author author)
         {
             string spName = "DeleteAuthor";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = author.ID;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", author.ID)
+            };
             return DBService.ExecuteSP(spName, sqlParameters);
         }
         public bool IsAuthorInUse(Author author)
         {
             string spName = "IsAuthorInUse";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = author.ID;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", author.ID)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return false;
@@ -162,11 +136,11 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool DoesAuthorIDExist(string authorID)
         {
-            string spName = "DoesAuthorIDExists";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = authorID;
+            string spName = "DoesAuthorIDExist";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", authorID)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return false;
@@ -178,10 +152,10 @@ namespace Pra.Bibliotheek.Core.Services
         public Author FindAuthorByName(string name)
         {
             string spName = "FindAuthorByName";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "name";
-            sqlParameters[0].Value = name;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("name", name)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return null;
@@ -193,10 +167,10 @@ namespace Pra.Bibliotheek.Core.Services
         public Author FindAuthorByID(string authorID)
         {
             string spName = "FindAuthorByName";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = authorID;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", authorID)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return null;
@@ -221,43 +195,39 @@ namespace Pra.Bibliotheek.Core.Services
         public bool AddPublisher(Publisher publisher)
         {
             string spName = "AddPublisher";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = publisher.ID;
-            sqlParameters[1] = new SqlParameter();
-            sqlParameters[1].ParameterName = "name";
-            sqlParameters[1].Value = publisher.Name;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", publisher.ID),
+                new SqlParameter("name", publisher.Name)
+            };
             return DBService.ExecuteSP(spName, sqlParameters);
         }
         public bool UpdatePublisher(Publisher publisher)
         {
             string spName = "UpdatePublisher";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = publisher.ID;
-            sqlParameters[1] = new SqlParameter();
-            sqlParameters[1].ParameterName = "name";
-            sqlParameters[1].Value = publisher.Name;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", publisher.ID),
+                new SqlParameter("name", publisher.Name)
+            };
             return DBService.ExecuteSP(spName, sqlParameters);
         }
         public bool DeletePublisher(Publisher publisher)
         {
             string spName = "DeletePublisher";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = publisher.ID;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", publisher.ID)
+            };
             return DBService.ExecuteSP(spName, sqlParameters);
         }
         public bool IsPublisherInUse(Publisher publisher)
         {
             string spName = "IsPublisherInUse";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = publisher.ID;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", publisher.ID)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return false;
@@ -268,11 +238,11 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool DoesPublisherIDExist(string publisherID)
         {
-            string spName = "DoesPulblisherIDExists";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = publisherID;
+            string spName = "DoesPublisherIDExist";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", publisherID)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return false;
@@ -284,10 +254,10 @@ namespace Pra.Bibliotheek.Core.Services
         public Publisher FindPublisherByName(string name)
         {
             string spName = "FindPublisherByName";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "name";
-            sqlParameters[0].Value = name;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("name", name)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return null;
@@ -299,10 +269,10 @@ namespace Pra.Bibliotheek.Core.Services
         public Publisher FindPublisherByID(string publisherID)
         {
             string spName = "FindPublisherByID";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter();
-            sqlParameters[0].ParameterName = "id";
-            sqlParameters[0].Value = publisherID;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("id", publisherID)
+            };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
             if (dataTable == null)
                 return null;
