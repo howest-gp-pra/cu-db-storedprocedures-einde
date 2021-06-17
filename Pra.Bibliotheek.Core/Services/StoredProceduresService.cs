@@ -127,12 +127,7 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("id", author.ID)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return false;
-            else if (int.Parse(dataTable.Rows[0][0].ToString()) == 0)
-                return false;
-            else
-                return true;
+            return dataTable != null && int.Parse(dataTable.Rows[0][0].ToString()) > 0;
         }
         public bool DoesAuthorIDExist(string authorID)
         {
@@ -142,12 +137,7 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("id", authorID)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return false;
-            else if (int.Parse(dataTable.Rows[0][0].ToString()) == 0)
-                return false;
-            else
-                return true;
+            return dataTable != null && int.Parse(dataTable.Rows[0][0].ToString()) > 0;
         }
         public Author FindAuthorByName(string name)
         {
@@ -157,9 +147,7 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("name", name)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return null;
-            else if (dataTable.Rows.Count == 0)
+            if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;
             else
                 return new Author(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
@@ -172,9 +160,7 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("id", authorID)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return null;
-            else if (dataTable.Rows.Count == 0)
+            if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;
             else
                 return new Author(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
@@ -229,12 +215,8 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("id", publisher.ID)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return false;
-            else if (int.Parse(dataTable.Rows[0][0].ToString()) == 0)
-                return false;
-            else
-                return true;
+            return dataTable != null && int.Parse(dataTable.Rows[0][0].ToString()) > 0;
+
         }
         public bool DoesPublisherIDExist(string publisherID)
         {
@@ -244,12 +226,7 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("id", publisherID)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return false;
-            else if (int.Parse(dataTable.Rows[0][0].ToString()) == 0)
-                return false;
-            else
-                return true;
+            return dataTable != null && int.Parse(dataTable.Rows[0][0].ToString()) > 0;
         }
         public Publisher FindPublisherByName(string name)
         {
@@ -259,9 +236,7 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("name", name)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return null;
-            else if (dataTable.Rows.Count == 0)
+            if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;
             else
                 return new Publisher(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
@@ -274,9 +249,7 @@ namespace Pra.Bibliotheek.Core.Services
                 new SqlParameter("id", publisherID)
             };
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
-            if (dataTable == null)
-                return null;
-            else if (dataTable.Rows.Count == 0)
+            if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;
             else
                 return new Publisher(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
