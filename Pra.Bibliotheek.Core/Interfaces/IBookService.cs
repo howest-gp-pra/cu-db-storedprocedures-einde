@@ -1,14 +1,10 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Pra.Bibliotheek.Core.Entities;
 
 namespace Pra.Bibliotheek.Core.Interfaces
 {
     public interface IBookService
     {
-        bool SaveData();
-
         List<Author> GetAuthors();
         bool AddAuthor(Author author);
         bool UpdateAuthor(Author author);

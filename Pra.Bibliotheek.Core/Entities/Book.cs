@@ -12,13 +12,9 @@ namespace Pra.Bibliotheek.Core.Entities
         public string PublisherID { get; set; }
         public int Year { get; set; }
 
-        public Book()
+        public Book(string title, string authorID, string publisherID, int year)
         {
             ID = Guid.NewGuid().ToString();
-        }
-
-        public Book(string title, string authorID, string publisherID, int year) : this()
-        {
             Title = title;
             AuthorID = authorID;
             PublisherID = publisherID;

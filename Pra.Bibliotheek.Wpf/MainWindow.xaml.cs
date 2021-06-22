@@ -7,9 +7,7 @@ using Pra.Bibliotheek.Core.Interfaces;
 
 namespace Pra.Bibliotheek.Wpf
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         IBookService bibService = new ConnectedService();
@@ -41,9 +39,9 @@ namespace Pra.Bibliotheek.Wpf
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(bibService is DisconnectedService)
+            if(bibService is DisconnectedService disconnectedService)
             {
-                if (!bibService.SaveData())
+                if (!disconnectedService.SaveData())
                 {
                     MessageBox.Show("We konden de data niet bewaren.  Probeer nogmaals af te sluiten.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     e.Cancel = true;
@@ -55,7 +53,7 @@ namespace Pra.Bibliotheek.Wpf
         {
             ClearControls();
             lstBooks.ItemsSource = null;
-            Author author = (Author)cmbFilterAuthor.SelectedItem; ;
+            Author author = (Author)cmbFilterAuthor.SelectedItem;
             Publisher publisher = (Publisher)cmbFilterPublisher.SelectedItem;
             lstBooks.ItemsSource = bibService.GetBooks(author, publisher);
         }
@@ -185,7 +183,6 @@ namespace Pra.Bibliotheek.Wpf
                     ClearControls();
                     PopulateBooks();
                 }
-
             }
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e)
