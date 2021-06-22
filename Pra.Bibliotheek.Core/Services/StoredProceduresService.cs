@@ -25,6 +25,11 @@ namespace Pra.Bibliotheek.Core.Services
                 sqlParameters.Add(new SqlParameter("publisherID", publisher.ID));
             }
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, sqlParameters);
+
+            if (dataTable == null)
+                return null;
+
+            List<Book> books = new List<Book>();
             foreach (DataRow dr in dataTable.Rows)
             {
                 books.Add(new Book(dr["id"].ToString(), dr["title"].ToString(), dr["authorID"].ToString(), dr["publisherID"].ToString(), int.Parse(dr["year"].ToString())));
@@ -81,9 +86,13 @@ namespace Pra.Bibliotheek.Core.Services
         // CRUD AUTEUR
         public List<Author> GetAuthors()
         {
-            List<Author> authors = new List<Author>();
             string spName = "GetAuthors";
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, null);
+
+            if (dataTable == null)
+                return null;
+
+            List<Author> authors = new List<Author>();
             foreach (DataRow dr in dataTable.Rows)
             {
                 authors.Add(new Author(dr["id"].ToString(), dr["name"].ToString()));
@@ -169,9 +178,13 @@ namespace Pra.Bibliotheek.Core.Services
         // CRUD UITGEVER
         public List<Publisher> GetPublishers()
         {
-            List<Publisher> publishers = new List<Publisher>();
             string spName = "GetPublishers";
             DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, null);
+
+            if (dataTable == null)
+                return null;
+
+            List<Publisher> publishers = new List<Publisher>();
             foreach (DataRow dr in dataTable.Rows)
             {
                 publishers.Add(new Publisher(dr["id"].ToString(), dr["name"].ToString()));
@@ -255,10 +268,6 @@ namespace Pra.Bibliotheek.Core.Services
                 return new Publisher(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
         }
 
-        public bool SaveData()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

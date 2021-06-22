@@ -76,7 +76,6 @@ namespace Pra.Bibliotheek.Core.Services
                 sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 return true;
-
             }
             catch
             {
@@ -107,7 +106,6 @@ namespace Pra.Bibliotheek.Core.Services
                 DataTable dataTable = new DataTable();
                 dataTable.Load(sqlDataReader);
                 return dataTable;
-
             }
             catch
             {
