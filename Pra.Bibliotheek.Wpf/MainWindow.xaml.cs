@@ -28,10 +28,13 @@ namespace Pra.Bibliotheek.Wpf
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!bibService.SaveData())
+            if(bibService is DisconnectedService disconnectedService)
             {
-                MessageBox.Show("We konden de data niet bewaren.  Probeer nogmaals af te sluiten.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                e.Cancel = true;
+                if (!disconnectedService.SaveData())
+                {
+                    MessageBox.Show("We konden de data niet bewaren.  Probeer nogmaals af te sluiten.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    e.Cancel = true;
+                }
             }
         }
 
@@ -52,7 +55,6 @@ namespace Pra.Bibliotheek.Wpf
             List<Author> authors = bibService.GetAuthors();
 
             cmbAuthor.SelectedValuePath = "ID";
-            cmbAuthor.DisplayMemberPath = "Name";
 
             cmbFilterAuthor.ItemsSource = authors;
             cmbAuthor.ItemsSource = authors;
@@ -67,7 +69,6 @@ namespace Pra.Bibliotheek.Wpf
             List<Publisher> publishers = bibService.GetPublishers();
 
             cmbPublisher.SelectedValuePath = "ID";
-            cmbPublisher.DisplayMemberPath = "Name";
 
             cmbFilterPublisher.ItemsSource = publishers;
             cmbPublisher.ItemsSource = publishers;
