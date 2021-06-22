@@ -15,9 +15,8 @@ namespace Pra.Bibliotheek.Core.Services
             {
                 sqlDataAdapter.Fill(dataSet);
             }
-            catch (Exception error)
+            catch
             {
-                string errorMessage = error.Message;  // t.b.v. debugging
                 return null;
             }
             return dataSet.Tables[0];
@@ -32,9 +31,8 @@ namespace Pra.Bibliotheek.Core.Services
                 sqlCommand.ExecuteNonQuery();
                 return true;
             }
-            catch (Exception error)
+            catch
             {
-                string errorMessage = error.Message;  // t.b.v. debugging
                 return false;
             }
             finally
@@ -53,9 +51,8 @@ namespace Pra.Bibliotheek.Core.Services
                 sqlConnection.Open();
                 return sqlCommand.ExecuteScalar().ToString();
             }
-            catch (Exception error)
+            catch
             {
-                string errorMessage = error.Message;  // t.b.v. debugging
                 return null;
             }
             finally
