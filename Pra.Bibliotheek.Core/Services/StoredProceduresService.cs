@@ -12,8 +12,6 @@ namespace Pra.Bibliotheek.Core.Services
         // CRUD BOEKEN
         public List<Book> GetBooks(Author author = null, Publisher publisher = null)
         {
-            List<Book> books = new List<Book>();
-
             string spName = "GetBooks";
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             if (author != null)
