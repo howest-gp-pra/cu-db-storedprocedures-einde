@@ -78,9 +78,8 @@ namespace Pra.Bibliotheek.Core.Services
                 return true;
 
             }
-            catch (Exception error)
+            catch
             {
-                string errorMessage = error.Message; // tbv debugging
                 return false;
             }
             finally
@@ -110,9 +109,8 @@ namespace Pra.Bibliotheek.Core.Services
                 return dataTable;
 
             }
-            catch (Exception error)
+            catch
             {
-                string errorMessage = error.Message; // tbv debugging
                 return null;
             }
             finally
