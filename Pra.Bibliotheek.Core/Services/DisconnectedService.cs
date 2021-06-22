@@ -9,15 +9,15 @@ namespace Pra.Bibliotheek.Core.Services
 {
     public class DisconnectedService : IBookService
     {
-        private DataSet dSBib;
+        private DataSet dsBib;
         private DataTable dtAuthors;
         private DataTable dtPublishers;
         private DataTable dtBooks;
 
         public DisconnectedService()
         {
-            dSBib = FileService.ReadFile();
-            if (dSBib == null)
+            dsBib = FileService.ReadFile();
+            if (dsBib == null)
             {
                 PrepareObjects();
                 CreateDataTables();
@@ -31,38 +31,35 @@ namespace Pra.Bibliotheek.Core.Services
 
         public bool SaveData()
         {
-            if (FileService.WriteFile(dSBib))
-                return true;
-            else
-                return false;
+            return FileService.WriteFile(dsBib);
         }
         private void ReadExistingData()
         {
-            dtAuthors = dSBib.Tables["authors"];
-            dtPublishers = dSBib.Tables["publishers"];
-            dtBooks = dSBib.Tables["books"];
+            dtAuthors = dsBib.Tables["authors"];
+            dtPublishers = dsBib.Tables["publishers"];
+            dtBooks = dsBib.Tables["books"];
         }
         private void PrepareObjects()
         {
-            dSBib = new DataSet();
+            dsBib = new DataSet();
             dtAuthors = new DataTable();
             dtPublishers = new DataTable();
             dtBooks = new DataTable();
-            dSBib.Tables.Add(dtAuthors);
-            dSBib.Tables.Add(dtPublishers);
-            dSBib.Tables.Add(dtBooks);
+            dsBib.Tables.Add(dtAuthors);
+            dsBib.Tables.Add(dtPublishers);
+            dsBib.Tables.Add(dtBooks);
         }
         private void CreateDataTables()
         {
-            CreatedtAuthors();
-            CreatedtPublishers();
-            CreatedtBooks();
+            CreateDtAuthors();
+            CreateDtPublishers();
+            CreateDtBooks();
 
-            dSBib.Relations.Add(dtAuthors.Columns["ID"], dtBooks.Columns["authorID"]);
-            dSBib.Relations.Add(dtPublishers.Columns["ID"], dtBooks.Columns["publisherID"]);
+            dsBib.Relations.Add(dtAuthors.Columns["ID"], dtBooks.Columns["authorID"]);
+            dsBib.Relations.Add(dtPublishers.Columns["ID"], dtBooks.Columns["publisherID"]);
 
         }
-        private void CreatedtAuthors()
+        private void CreateDtAuthors()
         {
             dtAuthors.TableName = "authors";
             DataColumn dc = new DataColumn();
@@ -79,7 +76,7 @@ namespace Pra.Bibliotheek.Core.Services
             dc.MaxLength = 100;
             dtAuthors.Columns.Add(dc);
         }
-        private void CreatedtPublishers()
+        private void CreateDtPublishers()
         {
             dtPublishers.TableName = "publishers";
             DataColumn dc = new DataColumn();
@@ -96,7 +93,7 @@ namespace Pra.Bibliotheek.Core.Services
             dc.MaxLength = 100;
             dtPublishers.Columns.Add(dc);
         }
-        private void CreatedtBooks()
+        private void CreateDtBooks()
         {
             dtBooks.TableName = "Books";
             DataColumn dc = new DataColumn();
@@ -208,7 +205,7 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool UpdateAuthor(Author author)
         {
-            string search = $"ID = '{author.ID}' ";
+            string search = $"ID = '{author.ID}'";
             DataRow[] dataRows = dtAuthors.Select(search);
             if (dataRows.Count() == 1)
             {
@@ -231,7 +228,7 @@ namespace Pra.Bibliotheek.Core.Services
         {
             if (IsAuthorInUse(author))
                 return false;
-            string search = $"ID = '{author.ID}' ";
+            string search = $"ID = '{author.ID}'";
             DataRow[] dataRows = dtAuthors.Select(search);
             if (dataRows.Count() == 1)
             {
@@ -245,33 +242,19 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool IsAuthorInUse(Author author)
         {
-            string search = $"authorID = '{author.ID}' ";
+            string search = $"authorID = '{author.ID}'";
             DataRow[] dataRows = dtBooks.Select(search);
-            if (dataRows.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return dataRows.Count() > 0;
         }
-        public bool DoesAuthorIDExists(string authorID)
+        public bool DoesAuthorIDExist(string authorID)
         {
-            string search = $"ID = '{authorID}' ";
+            string search = $"ID = '{authorID}'";
             DataRow[] dataRows = dtAuthors.Select(search);
-            if (dataRows.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return dataRows.Count() > 0;
         }
         public Author FindAuthorByName(string name)
         {
-            string search = $"name = '{name}' ";
+            string search = $"name = '{name}'";
             DataRow[] dataRows = dtAuthors.Select(search);
             if (dataRows.Count() > 0)
             {
@@ -281,7 +264,7 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public Author FindAuthorByID(string authorID)
         {
-            string search = $"ID = '{authorID}' ";
+            string search = $"ID = '{authorID}'";
             DataRow[] dataRows = dtAuthors.Select(search);
             if (dataRows.Count() == 1)
             {
@@ -318,12 +301,19 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool UpdatePublisher(Publisher publisher)
         {
-            string search = $"ID = '{publisher.ID}' ";
+            string search = $"ID = '{publisher.ID}'";
             DataRow[] dataRows = dtPublishers.Select(search);
             if (dataRows.Count() == 1)
             {
-                dataRows[0]["name"] = publisher.Name;
-                return true;
+                try
+                {
+                    dataRows[0]["name"] = publisher.Name;
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
             else
             {
@@ -334,7 +324,7 @@ namespace Pra.Bibliotheek.Core.Services
         {
             if (IsPublisherInUse(publisher))
                 return false;
-            string search = $"ID = '{publisher.ID}' ";
+            string search = $"ID = '{publisher.ID}'";
             DataRow[] dataRows = dtPublishers.Select(search);
             if (dataRows.Count() == 1)
             {
@@ -348,33 +338,19 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool IsPublisherInUse(Publisher publisher)
         {
-            string search = $"publisherID = '{publisher.ID}' ";
+            string search = $"publisherID = '{publisher.ID}'";
             DataRow[] dataRows = dtBooks.Select(search);
-            if (dataRows.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return dataRows.Count() > 0;
         }
-        public bool DoesPulblisherIDExists(string publisherID)
+        public bool DoesPublisherIDExist(string publisherID)
         {
-            string search = $"ID = '{publisherID}' ";
+            string search = $"ID = '{publisherID}'";
             DataRow[] dataRows = dtPublishers.Select(search);
-            if (dataRows.Count() == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return dataRows.Count() == 1;
         }
         public Publisher FindPublisherByName(string name)
         {
-            string search = $"name = '{name}' ";
+            string search = $"name = '{name}'";
             DataRow[] dataRows = dtPublishers.Select(search);
             if (dataRows.Count() > 0)
             {
@@ -384,7 +360,7 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public Publisher FindPublisherByID(string publisherID)
         {
-            string search = $"ID = '{publisherID}' ";
+            string search = $"ID = '{publisherID}'";
             DataRow[] dataRows = dtPublishers.Select(search);
             if (dataRows.Count() == 1)
             {
@@ -398,15 +374,14 @@ namespace Pra.Bibliotheek.Core.Services
         {
             List<Book> books = new List<Book>();
 
-            string filter = "";
+            List<string> filters = new List<string>();
             if (author != null)
-                filter = $"authorID = '{author.ID}'";
+                filters.Add($"authorID = '{author.ID}'");
             if (publisher != null)
-            {
-                if (filter != "")
-                    filter += " and ";
-                filter = $"publisherID = '{publisher.ID}'";
-            }
+                filters.Add($"publisherID = '{publisher.ID}'");
+            
+            string filter = string.Join(" and ", filters);
+
             DataRow[] dataRows = dtBooks.Select(filter);
             foreach (DataRow dr in dataRows)
             {
@@ -417,9 +392,9 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool AddBook(Book book)
         {
-            if (!DoesAuthorIDExists(book.AuthorID))
+            if (!DoesAuthorIDExist(book.AuthorID))
                 return false;
-            if (!DoesPulblisherIDExists(book.PublisherID))
+            if (!DoesPublisherIDExist(book.PublisherID))
                 return false;
 
             DataRow dr = dtBooks.NewRow();
@@ -441,15 +416,22 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool UpdateBook(Book book)
         {
-            string search = $"ID = '{book.ID}' ";
+            string search = $"ID = '{book.ID}'";
             DataRow[] dataRows = dtBooks.Select(search);
             if (dataRows.Count() == 1)
             {
-                dataRows[0]["title"] = book.Title;
-                dataRows[0]["authorID"] = book.AuthorID;
-                dataRows[0]["publisherID"] = book.PublisherID;
-                dataRows[0]["year"] = book.Year;
-                return true;
+                try
+                {
+                    dataRows[0]["title"] = book.Title;
+                    dataRows[0]["authorID"] = book.AuthorID;
+                    dataRows[0]["publisherID"] = book.PublisherID;
+                    dataRows[0]["year"] = book.Year;
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
             else
             {
@@ -458,7 +440,7 @@ namespace Pra.Bibliotheek.Core.Services
         }
         public bool DeleteBook(Book book)
         {
-            string search = $"ID = '{book.ID}' ";
+            string search = $"ID = '{book.ID}'";
             DataRow[] dataRows = dtBooks.Select(search);
             if (dataRows.Count() == 1)
             {
