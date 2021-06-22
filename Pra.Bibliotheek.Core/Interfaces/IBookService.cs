@@ -5,8 +5,6 @@ namespace Pra.Bibliotheek.Core.Interfaces
 {
     public interface IBookService
     {
-        bool SaveData();
-
         List<Author> GetAuthors();
         bool AddAuthor(Author author);
         bool UpdateAuthor(Author author);
