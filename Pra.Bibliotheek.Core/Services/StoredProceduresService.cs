@@ -85,7 +85,7 @@ namespace Pra.Bibliotheek.Core.Services
         public List<Author> GetAuthors()
         {
             string spName = "GetAuthors";
-            DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, null);
+            DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, new List<SqlParameter>());
 
             if (dataTable == null)
                 return null;
@@ -177,7 +177,7 @@ namespace Pra.Bibliotheek.Core.Services
         public List<Publisher> GetPublishers()
         {
             string spName = "GetPublishers";
-            DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, null);
+            DataTable dataTable = DBService.ExecuteSPWithDataTable(spName, new List<SqlParameter>());
 
             if (dataTable == null)
                 return null;
