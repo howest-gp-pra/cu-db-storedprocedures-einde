@@ -379,7 +379,6 @@ namespace Pra.Bibliotheek.Core.Services
                 filters.Add($"authorID = '{author.ID}'");
             if (publisher != null)
                 filters.Add($"publisherID = '{publisher.ID}'");
-            
             string filter = string.Join(" and ", filters);
 
             DataRow[] dataRows = dtBooks.Select(filter);

@@ -12,9 +12,13 @@ namespace Pra.Bibliotheek.Core.Services
         // CRUD AUTEUR
         public List<Author> GetAuthors()
         {
-            List<Author> authors = new List<Author>();
             string sql = "select id, name from author order by name";
             DataTable dataTable = DBService.ExecuteSelect(sql);
+
+            if (dataTable == null)
+                return null;
+
+            List<Author> authors = new List<Author>();
             foreach (DataRow dr in dataTable.Rows)
             {
                 authors.Add(new Author(dr["id"].ToString(), dr["name"].ToString()));
@@ -54,7 +58,7 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string sql = $"select * from author where name = '{Helper.HandleQuotes(name)}'";
             DataTable dataTable = DBService.ExecuteSelect(sql);
-            if (dataTable.Rows.Count > 0)
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 return new Author(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
             }
@@ -64,7 +68,7 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string sql = $"select * from author where id = '{authorID}'";
             DataTable dataTable = DBService.ExecuteSelect(sql);
-            if (dataTable.Rows.Count > 0)
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 return new Author(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
             }
@@ -74,9 +78,13 @@ namespace Pra.Bibliotheek.Core.Services
         // CRUD UITGEVER
         public List<Publisher> GetPublishers()
         {
-            List<Publisher> publishers = new List<Publisher>();
             string sql = $"select id, name from publisher order by name";
             DataTable dataTable = DBService.ExecuteSelect(sql);
+
+            if (dataTable == null)
+                return null;
+
+            List<Publisher> publishers = new List<Publisher>();
             foreach (DataRow dr in dataTable.Rows)
             {
                 publishers.Add(new Publisher(dr["id"].ToString(), dr["name"].ToString()));
@@ -116,7 +124,7 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string sql = $"select * from publisher where name = '{Helper.HandleQuotes(name)}'";
             DataTable dataTable = DBService.ExecuteSelect(sql);
-            if (dataTable.Rows.Count > 0)
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 return new Publisher(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
             }
@@ -126,7 +134,7 @@ namespace Pra.Bibliotheek.Core.Services
         {
             string sql = $"select * from publisher where id = '{publisherID}'";
             DataTable dataTable = DBService.ExecuteSelect(sql);
-            if (dataTable.Rows.Count > 0)
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 return new Publisher(dataTable.Rows[0]["id"].ToString(), dataTable.Rows[0]["name"].ToString());
             }
@@ -136,8 +144,6 @@ namespace Pra.Bibliotheek.Core.Services
         // CRUD BOEKEN
         public List<Book> GetBooks(Author author = null, Publisher publisher = null)
         {
-            List<Book> books = new List<Book>();
-
             List<string> filters = new List<string>();
             if (author != null)
                 filters.Add($"authorID = '{author.ID}'");
@@ -148,6 +154,11 @@ namespace Pra.Bibliotheek.Core.Services
 
             string sql = "select * from book " + filter + " order by title";
             DataTable dataTable = DBService.ExecuteSelect(sql);
+
+            if (dataTable == null)
+                return null;
+
+            List<Book> books = new List<Book>();
             foreach (DataRow dr in dataTable.Rows)
             {
                 books.Add(new Book(dr["id"].ToString(), dr["title"].ToString(), dr["authorID"].ToString(), dr["publisherID"].ToString(), int.Parse(dr["year"].ToString())));
@@ -175,9 +186,5 @@ namespace Pra.Bibliotheek.Core.Services
             return DBService.ExecuteCommand(sql);
         }
 
-        public bool SaveData()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
