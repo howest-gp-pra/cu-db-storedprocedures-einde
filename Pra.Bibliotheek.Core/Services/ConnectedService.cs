@@ -150,7 +150,8 @@ namespace Pra.Bibliotheek.Core.Services
             if (publisher != null)
                 filters.Add($"publisherID = '{publisher.ID}'");
 
-            string filter = string.Join(" and ", filters);
+            string filter = "";
+            if (filters.Count > 0) filter = $"where {string.Join(" and ", filters)}";
 
             string sql = "select * from book " + filter + " order by title";
             DataTable dataTable = DBService.ExecuteSelect(sql);
