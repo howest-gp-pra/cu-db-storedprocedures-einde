@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Pra.Bibliotheek.Core/Pra.Bibliotheek.Core.csproj" />
+  <Project Path="Pra.Bibliotheek.Wpf/Pra.Bibliotheek.Wpf.csproj" />
+</Solution>
